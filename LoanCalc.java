@@ -64,18 +64,19 @@ public class LoanCalc {
 		iterationCounter = 0;
 		double l = 0;
 		double h = loan;
-		double g = l + h / 2;
-		double balance = endBalance(loan, rate, n, g);
-		while(Math.abs(balance) >= epsilon){
-			if(balance < 0){
+		double g = (l + h) / 2;
+
+		while(h - l >= epsilon){
+			double balance = endBalance(loan, rate, n, g);
+			if(balance <= 0){
 				h = g;
 			}else{
 				l = g;
 			}
 			g = (l + h) / 2;
-			balance = endBalance(loan, rate, n, g);
 			iterationCounter++;
 		}
+		
 		return g;
     }
 }
